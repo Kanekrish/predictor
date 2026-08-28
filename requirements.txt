@@ -1,6 +1,4 @@
-fastapi
-uvicorn
-python-multipart
+streamlit
 pandas
 numpy
 scikit-learn
