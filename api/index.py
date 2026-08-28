@@ -21,9 +21,7 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# IMPORTANT:
-# Replace these three URLs with the RAW GitHub URLs of your existing
-# trained artifacts. Do not use github.com/.../blob/... URLs.
+
 MODEL_URL = os.getenv("MODEL_URL", "PASTE_RAW_GITHUB_MODEL_URL_HERE")
 TARGET_ENCODER_URL = os.getenv(
     "TARGET_ENCODER_URL",
