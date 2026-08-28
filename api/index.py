@@ -22,20 +22,20 @@ app.add_middleware(
 )
 
 
-MODEL_URL = os.getenv("MODEL_URL", "PASTE_RAW_GITHUB_MODEL_URL_HERE")
+MODEL_URL = os.getenv("MODEL_URL", "https://raw.githubusercontent.com/Kanekrish/predictor/main/model/xgboost_model.pkl")
 TARGET_ENCODER_URL = os.getenv(
     "TARGET_ENCODER_URL",
-    "PASTE_RAW_GITHUB_TARGET_ENCODER_URL_HERE"
+    "https://raw.githubusercontent.com/Kanekrish/predictor/main/model/target_encoder.pkl"
 )
 FEATURE_ENCODERS_URL = os.getenv(
     "FEATURE_ENCODERS_URL",
-    "PASTE_RAW_GITHUB_FEATURE_ENCODERS_URL_HERE"
+    "https://raw.githubusercontent.com/Kanekrish/predictor/main/model/feature_encoders.pkl"
 )
 
 _feature_columns = None
 
 def load_pickle_from_github(url, filename):
-    if not url or url.startswith("PASTE_RAW"):
+    if not url or url.startswith("https://raw.githubusercontent.com/Kanekrish/predictor/main/model/xgboost_model.pkl"):
         raise RuntimeError(
             f"Set the GitHub URL for {filename} before deploying."
         )
@@ -54,13 +54,13 @@ def load_pickle_from_github(url, filename):
 
 def get_artifacts():
     model = load_pickle_from_github(
-        MODEL_URL, "xgboost_model.pkl"
+        MODEL_URL, "https://raw.githubusercontent.com/Kanekrish/predictor/main/model/xgboost_model.pkl"
     )
     target_encoder = load_pickle_from_github(
-        TARGET_ENCODER_URL, "target_encoder.pkl"
+        TARGET_ENCODER_URL, "https://raw.githubusercontent.com/Kanekrish/predictor/main/model/target_encoder.pkl"
     )
     feature_encoders = load_pickle_from_github(
-        FEATURE_ENCODERS_URL, "feature_encoders.pkl"
+        FEATURE_ENCODERS_URL, "https://raw.githubusercontent.com/Kanekrish/predictor/main/model/feature_encoders.pkl"
     )
     return model, target_encoder, feature_encoders
 
