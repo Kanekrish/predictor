@@ -34,99 +34,65 @@ st.markdown(
 """ <style>
 
 ```
-.main {
-    background-color: #f8fafc;
-}
-
 .main-header {
-    background: linear-gradient(
-        135deg,
-        #0f172a 0%,
-        #1e3a8a 100%
-    );
-    padding: 2.2rem 2.5rem;
+    background: linear-gradient(135deg, #0f172a, #1e3a8a);
+    padding: 35px;
     border-radius: 18px;
     color: white;
-    margin-bottom: 2rem;
+    margin-bottom: 30px;
     box-shadow: 0 10px 30px rgba(15, 23, 42, 0.12);
 }
 
 .main-header h1 {
-    font-size: 2.35rem;
-    margin-bottom: 0.4rem;
-    font-weight: 750;
+    margin: 0;
+    font-size: 2.4rem;
+    font-weight: 700;
 }
 
 .main-header p {
+    margin-top: 10px;
     color: #dbeafe;
-    font-size: 1rem;
-    margin-bottom: 0;
-}
-
-.section-title {
-    font-size: 1.35rem;
-    font-weight: 700;
-    color: #0f172a;
-    margin-top: 1.5rem;
-    margin-bottom: 0.5rem;
-}
-
-.section-description {
-    color: #64748b;
-    margin-bottom: 1.2rem;
+    font-size: 1.05rem;
 }
 
 .info-box {
-    padding: 1rem 1.2rem;
-    border-radius: 12px;
     background: #eff6ff;
     border: 1px solid #bfdbfe;
+    padding: 20px;
+    border-radius: 12px;
+    margin: 20px 0;
     color: #1e3a8a;
-    margin-bottom: 1.5rem;
 }
 
 .warning-box {
-    padding: 1rem 1.2rem;
-    border-radius: 12px;
     background: #fffbeb;
     border: 1px solid #fde68a;
-    color: #92400e;
-    margin-top: 1.5rem;
-}
-
-div[data-testid="metric-container"] {
-    background: white;
-    border: 1px solid #e2e8f0;
-    padding: 1rem;
+    padding: 20px;
     border-radius: 12px;
-    box-shadow: 0 4px 14px rgba(15, 23, 42, 0.04);
-}
-
-.stButton > button {
-    width: 100%;
-    border-radius: 9px;
-    height: 3rem;
-    font-weight: 700;
-}
-
-section[data-testid="stSidebar"] {
-    background-color: #f8fafc;
-    border-right: 1px solid #e2e8f0;
+    margin-top: 30px;
+    color: #92400e;
 }
 
 .footer {
     text-align: center;
     color: #64748b;
-    font-size: 0.8rem;
-    padding: 2rem 0 1rem;
+    padding: 30px 0 15px 0;
     border-top: 1px solid #e2e8f0;
-    margin-top: 3rem;
+    margin-top: 45px;
+}
+
+div[data-testid="metric-container"] {
+    background: white;
+    border: 1px solid #e2e8f0;
+    padding: 15px;
+    border-radius: 12px;
+    box-shadow: 0 4px 14px rgba(15, 23, 42, 0.05);
 }
 
 </style>
 """,
 unsafe_allow_html=True
-
+```
 
 )
 
@@ -151,14 +117,15 @@ unsafe_allow_html=True
 
 with st.sidebar:
 
-
+```
 st.markdown("## About the System")
 
 st.write(
     """
     This application demonstrates the use of a trained
-    XGBoost classification model to predict breast cancer
-    stage from clinical dataset records.
+    XGBoost machine learning classification model to
+    predict breast cancer stage from clinical dataset
+    records.
     """
 )
 
@@ -169,20 +136,32 @@ st.markdown("### Model Information")
 st.write("**Algorithm:** XGBoost")
 st.write("**Dataset:** SEER")
 st.write("**Task:** Multi-class classification")
-st.write("**Target:** 6th Stage")
+st.write("**Target Variable:** 6th Stage")
 
 st.markdown("---")
 
-st.markdown("### Workflow")
+st.markdown("### Application Workflow")
 
 st.write("1. Upload trained XGBoost model")
 st.write("2. Upload target encoder")
 st.write("3. Upload feature encoders")
 st.write("4. Upload feature columns")
-st.write("5. Upload CSV dataset")
+st.write("5. Upload clinical CSV dataset")
 st.write("6. Generate predictions")
-st.write("7. Evaluate results")
-st.write("8. Download predictions")
+st.write("7. Evaluate model performance")
+st.write("8. Download prediction results")
+
+st.markdown("---")
+
+st.markdown("### Research Notice")
+
+st.write(
+    """
+    This system is intended for research and educational
+    demonstration. It is not intended to replace clinical
+    assessment or professional medical judgment.
+    """
+)
 ```
 
 # ============================================================
@@ -191,26 +170,29 @@ st.write("8. Download predictions")
 
 # ============================================================
 
-st.markdown(
-'<div class="section-title">Prediction Workspace</div>',
-unsafe_allow_html=True
-)
+st.markdown("## Prediction Workspace")
 
 st.markdown(
-""" <div class="section-description">
-Upload the trained XGBoost model, its preprocessing
-artifacts, and a compatible clinical dataset. </div>
-""",
-unsafe_allow_html=True
+"""
+Upload the trained XGBoost model and the preprocessing
+artifacts used during model training. Then upload a
+compatible clinical CSV dataset.
+"""
 )
 
+# ============================================================
+
+# REQUIRED FILE INFORMATION
+
+# ============================================================
+
 st.markdown(
-""" <div class="info-box"> <strong>Required files:</strong><br>
-• xgboost_model.pkl<br>
-• target_encoder.pkl<br>
-• feature_encoders.pkl<br>
-• feature_columns.pkl<br>
-• Clinical dataset (.csv) </div>
+""" <div class="info-box"> <strong>Required Files</strong><br><br>
+🧠 xgboost_model.pkl<br>
+🎯 target_encoder.pkl<br>
+🔤 feature_encoders.pkl<br>
+📋 feature_columns.pkl<br>
+📊 Clinical dataset (.csv) </div>
 """,
 unsafe_allow_html=True
 )
@@ -221,7 +203,7 @@ unsafe_allow_html=True
 
 # ============================================================
 
-st.markdown("### 🧠 Model and Preprocessing Files")
+st.markdown("### 🧠 Model and Preprocessing Artifacts")
 
 col1, col2 = st.columns(2)
 
@@ -229,9 +211,9 @@ with col1:
 
 ```
 model_file = st.file_uploader(
-    "Upload XGBoost Model (.pkl)",
+    "Upload XGBoost Model",
     type=["pkl"],
-    key="model",
+    key="model_file",
     help="Upload the trained xgboost_model.pkl file."
 )
 ```
@@ -240,9 +222,9 @@ with col2:
 
 ```
 target_encoder_file = st.file_uploader(
-    "Upload Target Encoder (.pkl)",
+    "Upload Target Encoder",
     type=["pkl"],
-    key="target",
+    key="target_encoder_file",
     help="Upload target_encoder.pkl."
 )
 ```
@@ -253,9 +235,9 @@ with col3:
 
 ```
 feature_encoder_file = st.file_uploader(
-    "Upload Feature Encoders (.pkl)",
+    "Upload Feature Encoders",
     type=["pkl"],
-    key="features",
+    key="feature_encoder_file",
     help="Upload feature_encoders.pkl."
 )
 ```
@@ -264,9 +246,9 @@ with col4:
 
 ```
 feature_columns_file = st.file_uploader(
-    "Upload Feature Columns (.pkl)",
+    "Upload Feature Columns",
     type=["pkl"],
-    key="columns",
+    key="feature_columns_file",
     help="Upload feature_columns.pkl."
 )
 ```
@@ -280,26 +262,10 @@ feature_columns_file = st.file_uploader(
 st.markdown("### 📊 Clinical Dataset")
 
 dataset_file = st.file_uploader(
-"Upload Clinical Dataset (.csv)",
+"Upload Clinical CSV Dataset",
 type=["csv"],
-key="dataset",
-help="Upload a CSV containing the features required by the trained model."
-)
-
-# ============================================================
-
-# CHECK REQUIRED FILES
-
-# ============================================================
-
-all_files_uploaded = all(
-[
-model_file,
-target_encoder_file,
-feature_encoder_file,
-feature_columns_file,
-dataset_file
-]
+key="dataset_file",
+help="Upload the dataset that will be used for prediction."
 )
 
 # ============================================================
@@ -308,7 +274,7 @@ dataset_file
 
 # ============================================================
 
-if dataset_file:
+if dataset_file is not None:
 
 ```
 try:
@@ -323,15 +289,23 @@ try:
         preview_df.columns.str.strip()
     )
 
-    st.markdown(
-        '<div class="section-title">Dataset Preview</div>',
-        unsafe_allow_html=True
-    )
+    st.markdown("### Dataset Preview")
 
-    st.write(
-        f"Dataset contains **{len(preview_df):,} records** "
-        f"and **{len(preview_df.columns)} columns**."
-    )
+    col1, col2 = st.columns(2)
+
+    with col1:
+
+        st.metric(
+            "Records",
+            f"{len(preview_df):,}"
+        )
+
+    with col2:
+
+        st.metric(
+            "Columns",
+            f"{len(preview_df.columns):,}"
+        )
 
     st.dataframe(
         preview_df.head(10),
@@ -340,10 +314,10 @@ try:
 
     dataset_file.seek(0)
 
-except Exception as e:
+except Exception as error:
 
     st.error(
-        f"Unable to read the uploaded CSV: {e}"
+        f"Unable to read the uploaded CSV: {error}"
     )
 ```
 
@@ -363,29 +337,40 @@ dataset_file
 
 ```
 # --------------------------------------------------------
-# Load trained artifacts
+# LOAD MODEL
 # --------------------------------------------------------
 
 model = joblib.load(
     model_file
 )
 
+
+# --------------------------------------------------------
+# LOAD TARGET ENCODER
+# --------------------------------------------------------
+
 target_encoder = joblib.load(
     target_encoder_file
 )
+
+
+# --------------------------------------------------------
+# LOAD FEATURE ENCODERS
+# --------------------------------------------------------
 
 feature_encoders = joblib.load(
     feature_encoder_file
 )
 
+
+# --------------------------------------------------------
+# LOAD FEATURE COLUMN LIST
+# --------------------------------------------------------
+
 feature_columns = joblib.load(
     feature_columns_file
 )
 
-
-# --------------------------------------------------------
-# Validate feature columns
-# --------------------------------------------------------
 
 if not isinstance(
     feature_columns,
@@ -398,17 +383,13 @@ if not isinstance(
 
 
 # --------------------------------------------------------
-# Load dataset
+# LOAD DATASET
 # --------------------------------------------------------
 
 dataset_file.seek(0)
 
 df = pd.read_csv(
     dataset_file
-)
-
-df.columns = (
-    df.columns.str.strip()
 )
 
 
@@ -419,8 +400,13 @@ if df.empty:
     )
 
 
+df.columns = (
+    df.columns.str.strip()
+)
+
+
 # --------------------------------------------------------
-# Remove completely empty unnamed columns
+# REMOVE COMPLETELY EMPTY UNNAMED COLUMNS
 # --------------------------------------------------------
 
 empty_unnamed = [
@@ -434,6 +420,7 @@ empty_unnamed = [
 
 ]
 
+
 if empty_unnamed:
 
     df = df.drop(
@@ -442,7 +429,7 @@ if empty_unnamed:
 
 
 # --------------------------------------------------------
-# Identify target column
+# TARGET COLUMN
 # --------------------------------------------------------
 
 target_column = "6th Stage"
@@ -453,7 +440,7 @@ has_target = (
 
 
 # --------------------------------------------------------
-# Separate features from target
+# CREATE FEATURE DATAFRAME
 # --------------------------------------------------------
 
 if has_target:
@@ -468,7 +455,7 @@ else:
 
 
 # --------------------------------------------------------
-# Check required features
+# CHECK REQUIRED FEATURES
 # --------------------------------------------------------
 
 missing_features = [
@@ -481,17 +468,18 @@ missing_features = [
 
 ]
 
+
 if missing_features:
 
     raise ValueError(
-        "The following required feature(s) "
-        "are missing from the uploaded dataset: "
+        "The uploaded dataset is missing "
+        "the following required feature(s): "
         + ", ".join(missing_features)
     )
 
 
 # --------------------------------------------------------
-# Keep exact training feature order
+# KEEP TRAINING FEATURE ORDER
 # --------------------------------------------------------
 
 X = X[
@@ -500,7 +488,7 @@ X = X[
 
 
 # --------------------------------------------------------
-# Apply saved feature encoders
+# APPLY FEATURE ENCODERS
 # --------------------------------------------------------
 
 for column in feature_columns:
@@ -508,7 +496,7 @@ for column in feature_columns:
     if column not in feature_encoders:
 
         raise ValueError(
-            f"No encoder was found for feature '{column}'."
+            f"No encoder found for feature '{column}'."
         )
 
 
@@ -538,9 +526,10 @@ for column in feature_columns:
             unknown_values
         )[:10]
 
+
         raise ValueError(
-            f"Unknown value(s) found in "
-            f"feature '{column}': "
+            f"Unknown value(s) found "
+            f"in feature '{column}': "
             + ", ".join(
                 map(str, examples)
             )
@@ -553,7 +542,7 @@ for column in feature_columns:
 
 
 # --------------------------------------------------------
-# Generate predictions
+# GENERATE PREDICTIONS
 # --------------------------------------------------------
 
 predictions_encoded = (
@@ -564,7 +553,7 @@ predictions_encoded = (
 
 
 # --------------------------------------------------------
-# Convert encoded predictions to stage labels
+# CONVERT PREDICTIONS TO ORIGINAL STAGE LABELS
 # --------------------------------------------------------
 
 predictions = (
@@ -575,7 +564,7 @@ predictions = (
 
 
 # --------------------------------------------------------
-# Create results
+# CREATE RESULTS DATAFRAME
 # --------------------------------------------------------
 
 result_df = df.copy()
@@ -586,10 +575,11 @@ result_df[
 
 
 # --------------------------------------------------------
-# Calculate evaluation metrics if actual labels exist
+# MODEL EVALUATION
 # --------------------------------------------------------
 
 metrics = None
+
 
 if has_target:
 
@@ -661,7 +651,9 @@ if has_target:
 
         "correct": correct,
 
-        "confusion_matrix": cm
+        "confusion_matrix": cm,
+
+        "classes": target_encoder.classes_
 
     }
 
@@ -671,25 +663,35 @@ return result_df, metrics
 
 # ============================================================
 
+# CHECK REQUIRED FILES
+
+# ============================================================
+
+all_files_uploaded = all(
+[
+model_file,
+target_encoder_file,
+feature_encoder_file,
+feature_columns_file,
+dataset_file
+]
+)
+
+# ============================================================
+
 # RUN PREDICTION
 
 # ============================================================
 
 st.markdown("---")
 
+st.markdown("## Generate Prediction")
+
 if all_files_uploaded:
 
 ```
-st.markdown(
-    '<div class="section-title">Run Prediction</div>',
-    unsafe_allow_html=True
-)
-
-st.write(
-    """
-    All required files have been uploaded.
-    Click the button below to process the dataset.
-    """
+st.success(
+    "All required files have been uploaded and are ready for processing."
 )
 
 
@@ -700,7 +702,7 @@ if st.button(
 ):
 
     with st.spinner(
-        "Loading model, preprocessing data, and generating predictions..."
+        "Loading model and processing the dataset..."
     ):
 
         try:
@@ -728,10 +730,11 @@ if st.button(
                 "Prediction completed successfully."
             )
 
-        except Exception as e:
+
+        except Exception as error:
 
             st.error(
-                f"Prediction failed: {e}"
+                f"Prediction failed: {error}"
             )
 ```
 
@@ -741,7 +744,7 @@ else:
 st.info(
     """
     Please upload all four model artifacts and the
-    clinical CSV dataset to enable prediction.
+    clinical CSV dataset before running the prediction.
     """
 )
 ```
@@ -759,6 +762,7 @@ result_df = (
     st.session_state["result_df"]
 )
 
+
 metrics = (
     st.session_state["metrics"]
 )
@@ -766,21 +770,16 @@ metrics = (
 
 st.markdown("---")
 
-st.markdown(
-    '<div class="section-title">Prediction Results</div>',
-    unsafe_allow_html=True
-)
+st.markdown("## Prediction Results")
 
 
-# --------------------------------------------------------
-# Evaluation Metrics
-# --------------------------------------------------------
+# ========================================================
+# METRICS
+# ========================================================
 
-if metrics:
+if metrics is not None:
 
-    st.markdown(
-        "### Model Evaluation"
-    )
+    st.markdown("### Model Performance")
 
 
     col1, col2, col3, col4 = st.columns(4)
@@ -837,13 +836,11 @@ if metrics:
         )
 
 
-    # ----------------------------------------------------
-    # Confusion Matrix
-    # ----------------------------------------------------
+    # ====================================================
+    # CONFUSION MATRIX
+    # ====================================================
 
-    st.markdown(
-        "### Confusion Matrix"
-    )
+    st.markdown("### Confusion Matrix")
 
 
     cm = metrics[
@@ -851,30 +848,20 @@ if metrics:
     ]
 
 
-    class_names = (
-        target_encoder_file
-    )
-
-
-    loaded_target_encoder = joblib.load(
-        class_names
-    )
-
-
-    class_labels = (
-        loaded_target_encoder.classes_
-    )
+    class_names = metrics[
+        "classes"
+    ]
 
 
     cm_df = pd.DataFrame(
         cm,
         index=[
-            f"Actual: {label}"
-            for label in class_labels
+            f"Actual: {name}"
+            for name in class_names
         ],
         columns=[
-            f"Predicted: {label}"
-            for label in class_labels
+            f"Predicted: {name}"
+            for name in class_names
         ]
     )
 
@@ -891,25 +878,24 @@ else:
         """
         Predictions were generated successfully.
 
-        The uploaded dataset does not contain the
-        '6th Stage' target column, so evaluation metrics
-        such as accuracy, precision, recall, and F1 score
-        cannot be calculated.
+        However, the uploaded dataset does not contain
+        the '6th Stage' target column. Therefore,
+        accuracy, precision, recall, F1 score, and the
+        confusion matrix cannot be calculated.
         """
     )
 
 
-# --------------------------------------------------------
-# Prediction table
-# --------------------------------------------------------
+# ========================================================
+# PREDICTION PREVIEW
+# ========================================================
 
-st.markdown(
-    "### Prediction Preview"
-)
+st.markdown("### Prediction Preview")
 
 
 st.write(
-    f"Showing the first 50 of **{len(result_df):,} records**."
+    f"Showing the first 50 of "
+    f"**{len(result_df):,} records**."
 )
 
 
@@ -919,9 +905,12 @@ st.dataframe(
 )
 
 
-# --------------------------------------------------------
-# Download results
-# --------------------------------------------------------
+# ========================================================
+# DOWNLOAD RESULTS
+# ========================================================
+
+st.markdown("### Download Results")
+
 
 csv_data = (
     result_df.to_csv(
@@ -952,11 +941,13 @@ st.markdown(
     <strong>Research and Educational Use Only</strong><br><br>
 
     This application is a machine learning research
-    demonstration. Predictions generated by the XGBoost
-    model should not be interpreted as a medical diagnosis,
-    prognosis, or treatment recommendation. Clinical
-    decisions should be made by qualified healthcare
-    professionals using appropriate clinical evidence.
+    demonstration. Predictions generated by the model
+    should not be interpreted as a medical diagnosis,
+    prognosis, or treatment recommendation.
+
+    Clinical decisions should be made by qualified
+    healthcare professionals using appropriate clinical
+    evidence.
 
 </div>
 """,
@@ -972,9 +963,7 @@ unsafe_allow_html=True
 # ============================================================
 
 st.markdown(
-""" <div class="footer">
-Breast Cancer Stage Predictor
- • 
+""" <div class="footer"> <strong>Breast Cancer Stage Predictor</strong> <br>
 XGBoost Machine Learning Research Demonstration </div>
 """,
 unsafe_allow_html=True
