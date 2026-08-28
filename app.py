@@ -1,9 +1,7 @@
-
 import streamlit as st
 import pandas as pd
 import numpy as np
 import joblib
-import io
 
 from sklearn.metrics import (
 accuracy_score,
@@ -36,13 +34,9 @@ st.markdown(
 """ <style>
 
 ```
-/* Main page */
-
 .main {
     background-color: #f8fafc;
 }
-
-/* Header */
 
 .main-header {
     background: linear-gradient(
@@ -50,17 +44,11 @@ st.markdown(
         #0f172a 0%,
         #1e3a8a 100%
     );
-
     padding: 2.2rem 2.5rem;
-
     border-radius: 18px;
-
     color: white;
-
     margin-bottom: 2rem;
-
-    box-shadow:
-        0 10px 30px rgba(15, 23, 42, 0.12);
+    box-shadow: 0 10px 30px rgba(15, 23, 42, 0.12);
 }
 
 .main-header h1 {
@@ -75,14 +63,10 @@ st.markdown(
     margin-bottom: 0;
 }
 
-/* Section headings */
-
 .section-title {
     font-size: 1.35rem;
     font-weight: 700;
-
     color: #0f172a;
-
     margin-top: 1.5rem;
     margin-bottom: 0.5rem;
 }
@@ -92,110 +76,51 @@ st.markdown(
     margin-bottom: 1.2rem;
 }
 
-/* Information boxes */
-
 .info-box {
     padding: 1rem 1.2rem;
-
     border-radius: 12px;
-
     background: #eff6ff;
-
     border: 1px solid #bfdbfe;
-
     color: #1e3a8a;
-
     margin-bottom: 1.5rem;
 }
 
 .warning-box {
     padding: 1rem 1.2rem;
-
     border-radius: 12px;
-
     background: #fffbeb;
-
     border: 1px solid #fde68a;
-
     color: #92400e;
-
     margin-top: 1.5rem;
 }
 
-/* Upload cards */
-
-.upload-card {
-    background: white;
-
-    padding: 1.3rem;
-
-    border-radius: 14px;
-
-    border: 1px solid #e2e8f0;
-
-    margin-bottom: 1rem;
-
-    box-shadow:
-        0 4px 14px rgba(15, 23, 42, 0.04);
-}
-
-/* Metric cards */
-
 div[data-testid="metric-container"] {
-
     background: white;
-
     border: 1px solid #e2e8f0;
-
     padding: 1rem;
-
     border-radius: 12px;
-
-    box-shadow:
-        0 4px 14px rgba(15, 23, 42, 0.04);
-
+    box-shadow: 0 4px 14px rgba(15, 23, 42, 0.04);
 }
-
-/* Buttons */
 
 .stButton > button {
-
     width: 100%;
-
     border-radius: 9px;
-
     height: 3rem;
-
     font-weight: 700;
-
 }
-
-/* Sidebar */
 
 section[data-testid="stSidebar"] {
-
     background-color: #f8fafc;
-
     border-right: 1px solid #e2e8f0;
-
 }
 
-/* Footer */
-
 .footer {
-
     text-align: center;
-
     color: #64748b;
-
     font-size: 0.8rem;
-
     padding: 2rem 0 1rem;
-
     border-top: 1px solid #e2e8f0;
-
     margin-top: 3rem;
-
 }
 
 </style>
@@ -212,22 +137,10 @@ unsafe_allow_html=True
 # ============================================================
 
 st.markdown(
-""" <div class="main-header">
-
-```
-    <h1>
-        🧬 Breast Cancer Stage Predictor
-    </h1>
-
-    <p>
-        SEER-based XGBoost Machine Learning Research Demonstration
-    </p>
-
-</div>
+""" <div class="main-header"> <h1>🧬 Breast Cancer Stage Predictor</h1> <p>
+SEER-based XGBoost Machine Learning Research Demonstration </p> </div>
 """,
 unsafe_allow_html=True
-```
-
 )
 
 # ============================================================
@@ -262,17 +175,19 @@ st.markdown("---")
 
 st.markdown("### Workflow")
 
-st.write("1. Upload trained model")
-st.write("2. Upload preprocessing artifacts")
-st.write("3. Upload CSV dataset")
-st.write("4. Generate predictions")
-st.write("5. Evaluate results")
-st.write("6. Download predictions")
+st.write("1. Upload trained XGBoost model")
+st.write("2. Upload target encoder")
+st.write("3. Upload feature encoders")
+st.write("4. Upload feature columns")
+st.write("5. Upload CSV dataset")
+st.write("6. Generate predictions")
+st.write("7. Evaluate results")
+st.write("8. Download predictions")
 ```
 
 # ============================================================
 
-# INTRODUCTION
+# PREDICTION WORKSPACE
 
 # ============================================================
 
@@ -283,53 +198,52 @@ unsafe_allow_html=True
 
 st.markdown(
 """ <div class="section-description">
-Upload the trained XGBoost model, preprocessing artifacts,
-and clinical dataset to generate breast cancer stage
-predictions. </div>
+Upload the trained XGBoost model, its preprocessing
+artifacts, and a compatible clinical dataset. </div>
 """,
 unsafe_allow_html=True
 )
 
 st.markdown(
-""" <div class="info-box"> <strong>Required model artifacts:</strong>
-xgboost_model.pkl,
-target_encoder.pkl,
-feature_encoders.pkl,
-and feature_columns.pkl.
-The uploaded dataset must be in CSV format. </div>
+""" <div class="info-box"> <strong>Required files:</strong><br>
+• xgboost_model.pkl<br>
+• target_encoder.pkl<br>
+• feature_encoders.pkl<br>
+• feature_columns.pkl<br>
+• Clinical dataset (.csv) </div>
 """,
 unsafe_allow_html=True
 )
 
 # ============================================================
 
-# FILE UPLOADS
+# MODEL FILE UPLOADS
 
 # ============================================================
+
+st.markdown("### 🧠 Model and Preprocessing Files")
 
 col1, col2 = st.columns(2)
 
 with col1:
 
 ```
-st.markdown("### 🧠 XGBoost Model")
-
 model_file = st.file_uploader(
-    "Upload xgboost_model.pkl",
+    "Upload XGBoost Model (.pkl)",
     type=["pkl"],
-    key="model"
+    key="model",
+    help="Upload the trained xgboost_model.pkl file."
 )
 ```
 
 with col2:
 
 ```
-st.markdown("### 🎯 Target Encoder")
-
 target_encoder_file = st.file_uploader(
-    "Upload target_encoder.pkl",
+    "Upload Target Encoder (.pkl)",
     type=["pkl"],
-    key="target"
+    key="target",
+    help="Upload target_encoder.pkl."
 )
 ```
 
@@ -338,38 +252,43 @@ col3, col4 = st.columns(2)
 with col3:
 
 ```
-st.markdown("### 🔤 Feature Encoders")
-
 feature_encoder_file = st.file_uploader(
-    "Upload feature_encoders.pkl",
+    "Upload Feature Encoders (.pkl)",
     type=["pkl"],
-    key="features"
+    key="features",
+    help="Upload feature_encoders.pkl."
 )
 ```
 
 with col4:
 
 ```
-st.markdown("### 📋 Feature Columns")
-
 feature_columns_file = st.file_uploader(
-    "Upload feature_columns.pkl",
+    "Upload Feature Columns (.pkl)",
     type=["pkl"],
-    key="columns"
+    key="columns",
+    help="Upload feature_columns.pkl."
 )
 ```
+
+# ============================================================
+
+# DATASET UPLOAD
+
+# ============================================================
 
 st.markdown("### 📊 Clinical Dataset")
 
 dataset_file = st.file_uploader(
-"Upload the CSV dataset to be evaluated",
+"Upload Clinical Dataset (.csv)",
 type=["csv"],
-key="dataset"
+key="dataset",
+help="Upload a CSV containing the features required by the trained model."
 )
 
 # ============================================================
 
-# CHECK FILES
+# CHECK REQUIRED FILES
 
 # ============================================================
 
@@ -385,7 +304,7 @@ dataset_file
 
 # ============================================================
 
-# DATA PREVIEW
+# DATASET PREVIEW
 
 # ============================================================
 
@@ -394,7 +313,11 @@ if dataset_file:
 ```
 try:
 
-    preview_df = pd.read_csv(dataset_file)
+    dataset_file.seek(0)
+
+    preview_df = pd.read_csv(
+        dataset_file
+    )
 
     preview_df.columns = (
         preview_df.columns.str.strip()
@@ -440,7 +363,7 @@ dataset_file
 
 ```
 # --------------------------------------------------------
-# Load artifacts
+# Load trained artifacts
 # --------------------------------------------------------
 
 model = joblib.load(
@@ -458,6 +381,20 @@ feature_encoders = joblib.load(
 feature_columns = joblib.load(
     feature_columns_file
 )
+
+
+# --------------------------------------------------------
+# Validate feature columns
+# --------------------------------------------------------
+
+if not isinstance(
+    feature_columns,
+    list
+):
+
+    raise ValueError(
+        "feature_columns.pkl must contain a list of feature names."
+    )
 
 
 # --------------------------------------------------------
@@ -488,12 +425,12 @@ if df.empty:
 
 empty_unnamed = [
 
-    c
+    column
 
-    for c in df.columns
+    for column in df.columns
 
-    if c.lower().startswith("unnamed")
-    and df[c].isna().all()
+    if column.lower().startswith("unnamed")
+    and df[column].isna().all()
 
 ]
 
@@ -505,7 +442,7 @@ if empty_unnamed:
 
 
 # --------------------------------------------------------
-# Target
+# Identify target column
 # --------------------------------------------------------
 
 target_column = "6th Stage"
@@ -516,7 +453,7 @@ has_target = (
 
 
 # --------------------------------------------------------
-# Prepare X
+# Separate features from target
 # --------------------------------------------------------
 
 if has_target:
@@ -531,30 +468,31 @@ else:
 
 
 # --------------------------------------------------------
-# Check features
+# Check required features
 # --------------------------------------------------------
 
 missing_features = [
 
-    col
+    column
 
-    for col in feature_columns
+    for column in feature_columns
 
-    if col not in X.columns
+    if column not in X.columns
 
 ]
 
 if missing_features:
 
     raise ValueError(
-        "The following required features "
-        "are missing from the dataset: "
-        +
-        ", ".join(missing_features)
+        "The following required feature(s) "
+        "are missing from the uploaded dataset: "
+        + ", ".join(missing_features)
     )
 
 
-# Keep the exact training feature order
+# --------------------------------------------------------
+# Keep exact training feature order
+# --------------------------------------------------------
 
 X = X[
     feature_columns
@@ -562,25 +500,25 @@ X = X[
 
 
 # --------------------------------------------------------
-# Apply saved encoders
+# Apply saved feature encoders
 # --------------------------------------------------------
 
-for col in feature_columns:
+for column in feature_columns:
 
-    if col not in feature_encoders:
+    if column not in feature_encoders:
 
         raise ValueError(
-            f"No encoder found for feature '{col}'."
+            f"No encoder was found for feature '{column}'."
         )
 
 
     encoder = (
-        feature_encoders[col]
+        feature_encoders[column]
     )
 
 
     values = (
-        X[col].astype(str)
+        X[column].astype(str)
     )
 
 
@@ -601,22 +539,21 @@ for col in feature_columns:
         )[:10]
 
         raise ValueError(
-            f"Unknown value(s) found "
-            f"in feature '{col}': "
-            +
-            ", ".join(
+            f"Unknown value(s) found in "
+            f"feature '{column}': "
+            + ", ".join(
                 map(str, examples)
             )
         )
 
 
-    X[col] = encoder.transform(
+    X[column] = encoder.transform(
         values
     )
 
 
 # --------------------------------------------------------
-# Prediction
+# Generate predictions
 # --------------------------------------------------------
 
 predictions_encoded = (
@@ -626,6 +563,10 @@ predictions_encoded = (
 )
 
 
+# --------------------------------------------------------
+# Convert encoded predictions to stage labels
+# --------------------------------------------------------
+
 predictions = (
     target_encoder.inverse_transform(
         predictions_encoded.astype(int)
@@ -634,7 +575,7 @@ predictions = (
 
 
 # --------------------------------------------------------
-# Results
+# Create results
 # --------------------------------------------------------
 
 result_df = df.copy()
@@ -645,16 +586,21 @@ result_df[
 
 
 # --------------------------------------------------------
-# Metrics
+# Calculate evaluation metrics if actual labels exist
 # --------------------------------------------------------
 
 metrics = None
 
 if has_target:
 
+    actual_values = (
+        df[target_column].astype(str)
+    )
+
+
     actual_encoded = (
         target_encoder.transform(
-            df[target_column].astype(str)
+            actual_values
         )
     )
 
@@ -739,12 +685,11 @@ st.markdown(
     unsafe_allow_html=True
 )
 
-st.markdown(
+st.write(
     """
     All required files have been uploaded.
     Click the button below to process the dataset.
-    """,
-    unsafe_allow_html=True
+    """
 )
 
 
@@ -755,7 +700,7 @@ if st.button(
 ):
 
     with st.spinner(
-        "Loading model and generating predictions..."
+        "Loading model, preprocessing data, and generating predictions..."
     ):
 
         try:
@@ -790,6 +735,17 @@ if st.button(
             )
 ```
 
+else:
+
+```
+st.info(
+    """
+    Please upload all four model artifacts and the
+    clinical CSV dataset to enable prediction.
+    """
+)
+```
+
 # ============================================================
 
 # DISPLAY RESULTS
@@ -817,10 +773,15 @@ st.markdown(
 
 
 # --------------------------------------------------------
-# Metrics
+# Evaluation Metrics
 # --------------------------------------------------------
 
 if metrics:
+
+    st.markdown(
+        "### Model Evaluation"
+    )
+
 
     col1, col2, col3, col4 = st.columns(4)
 
@@ -828,24 +789,24 @@ if metrics:
     with col1:
 
         st.metric(
-            "Records Processed",
-            f"{len(result_df):,}"
+            "Accuracy",
+            f"{metrics['accuracy'] * 100:.2f}%"
         )
 
 
     with col2:
 
         st.metric(
-            "Accuracy",
-            f"{metrics['accuracy'] * 100:.2f}%"
+            "Precision",
+            f"{metrics['precision'] * 100:.2f}%"
         )
 
 
     with col3:
 
         st.metric(
-            "Precision",
-            f"{metrics['precision'] * 100:.2f}%"
+            "Recall",
+            f"{metrics['recall'] * 100:.2f}%"
         )
 
 
@@ -857,19 +818,14 @@ if metrics:
         )
 
 
-    st.markdown(
-        "### Additional Evaluation"
-    )
-
-
     col1, col2 = st.columns(2)
 
 
     with col1:
 
         st.metric(
-            "Recall",
-            f"{metrics['recall'] * 100:.2f}%"
+            "Records Processed",
+            f"{len(result_df):,}"
         )
 
 
@@ -896,21 +852,29 @@ if metrics:
 
 
     class_names = (
-        joblib.load(
-            target_encoder_file
-        ).classes_
+        target_encoder_file
+    )
+
+
+    loaded_target_encoder = joblib.load(
+        class_names
+    )
+
+
+    class_labels = (
+        loaded_target_encoder.classes_
     )
 
 
     cm_df = pd.DataFrame(
         cm,
         index=[
-            f"Actual: {x}"
-            for x in class_names
+            f"Actual: {label}"
+            for label in class_labels
         ],
         columns=[
-            f"Predicted: {x}"
-            for x in class_names
+            f"Predicted: {label}"
+            for label in class_labels
         ]
     )
 
@@ -925,21 +889,27 @@ else:
 
     st.info(
         """
+        Predictions were generated successfully.
+
         The uploaded dataset does not contain the
-        '6th Stage' target column. Predictions were
-        generated, but accuracy, precision, recall,
-        and F1 score cannot be calculated without
-        known target labels.
+        '6th Stage' target column, so evaluation metrics
+        such as accuracy, precision, recall, and F1 score
+        cannot be calculated.
         """
     )
 
 
 # --------------------------------------------------------
-# Prediction preview
+# Prediction table
 # --------------------------------------------------------
 
 st.markdown(
     "### Prediction Preview"
+)
+
+
+st.write(
+    f"Showing the first 50 of **{len(result_df):,} records**."
 )
 
 
@@ -950,7 +920,7 @@ st.dataframe(
 
 
 # --------------------------------------------------------
-# Download
+# Download results
 # --------------------------------------------------------
 
 csv_data = (
@@ -979,7 +949,7 @@ st.markdown(
 """ <div class="warning-box">
 
 ```
-    <strong>Research and Educational Use Only</strong><br>
+    <strong>Research and Educational Use Only</strong><br><br>
 
     This application is a machine learning research
     demonstration. Predictions generated by the XGBoost
@@ -1003,15 +973,9 @@ unsafe_allow_html=True
 
 st.markdown(
 """ <div class="footer">
-
-```
-    Breast Cancer Stage Predictor
-    &nbsp;•&nbsp;
-    XGBoost Machine Learning Research Demonstration
-
-</div>
+Breast Cancer Stage Predictor
+ • 
+XGBoost Machine Learning Research Demonstration </div>
 """,
 unsafe_allow_html=True
-```
-
 )
