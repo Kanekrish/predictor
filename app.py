@@ -151,7 +151,7 @@ unsafe_allow_html=True
 
 with st.sidebar:
 
-```
+
 st.markdown("## About the System")
 
 st.write(
